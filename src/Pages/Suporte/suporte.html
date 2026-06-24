@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suporte Orbital - Atendimento ao Viajante</title> 
+    <link rel="stylesheet" href="home.css"> <link rel="icon" href="Gemini_Generated_Image_1r79gr1r79gr1r79.png">
+    
+    <style>
+        .suporte-container {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: rgba(26, 26, 26, 0.6);
+            border: 1px solid #333;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .suporte-container h1 {
+            font-size: 32px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .suporte-container p {
+            color: #b3b3b3;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-grupo {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-grupo label {
+            display: block;
+            color: #0088ff;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .form-grupo input, .form-grupo textarea, .form-grupo select {
+            width: 100%;
+            background-color: #1a1a1a;
+            border: 1px solid #404040;
+            padding: 14px;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-grupo input:focus, .form-grupo textarea:focus, .form-grupo select:focus {
+            border-color: #0088ff;
+        }
+
+        .btn-enviar {
+            width: 100%;
+            background: linear-gradient(135deg, #0055cc, #0088ff);
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 136, 255, 0.3);
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn-enviar:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #0066ff, #00a3ff);
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0088ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(45 12 12)"></ellipse>
+                </svg>
+                <span>Orbital</span>
+            </a>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Sobrenos.html">Sobre Nós</a></li>
+                    <li><a href="Viagens.html">Viagens</a></li>
+                    <li><a href="suporte.html" class="active">Suporte</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="suporte-container">
+        <h1>Central de Atendimento</h1>
+        <p>Tem dúvidas sobre os trajes espaciais ou pressurização marítima? Fale com a nossa equipe comercial.</p>
+        
+        <form action="#" onsubmit="alert('Mensagem enviada com sucesso para a nossa base de comando!'); return false;">
+            <div class="form-grupo">
+                <label>Seu Nome</label>
+                <input type="text" placeholder="Ex: Major Tom" required>
+            </div>
+            
+            <div class="form-grupo">
+                <label>Destino de Interesse</label>
+                <select>
+                    <option>Residências Lunares (Lua)</option>
+                    <option>Expedição Ruínas do Titanic</option>
+                    <option>Outros Assuntos</option>
+                </select>
+            </div>
+
+            <div class="form-grupo">
+                <label>Como podemos ajudar?</label>
+                <textarea rows="4" placeholder="Digite sua mensagem aqui..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-enviar">Enviar Mensagem</button>
+        </form>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbital - Destinos</title> 
+    <link rel="stylesheet" href="home.css">
+    <link rel="icon" href="Gemini_Generated_Image_1r79gr1r79gr1r79.png">
+    
+    <style>
+        /* ==========================================================================
+           ESTILOS EXCLUSIVOS DA PÁGINA DE VIAGENS
+           ========================================================================== */
+        .destinos-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .destinos-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .destinos-subtitle {
+            font-size: 16px;
+            color: #b3b3b3;
+            margin-bottom: 50px;
+        }
+
+        /* Grid que organiza os cards um do lado do outro */
+        .destinos-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* Estilo do Card individual */
+        .destino-card {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 20px;
+            width: 320px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Efeito ao passar o mouse no card */
+        .destino-card:hover {
+            transform: translateY(-10px);
+            border-color: #0088ff;
+            box-shadow: 0 15px 35px rgba(0, 136, 255, 0.2);
+        }
+
+        /* Área do ícone/imagem no topo do card */
+        .destino-preview {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            border-bottom: 1px solid #333;
+        }
+
+        /* Conteúdo de texto do card */
+        .destino-info {
+            padding: 25px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .destino-info h3 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .destino-info p {
+            color: #a0a0a0;
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 66px; /* Mantém os textos alinhados */
+        }
+
+        /* Tag de preço/categoria fictícia */
+        .destino-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .destino-tag {
+            background-color: rgba(0, 136, 255, 0.1);
+            color: #0088ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-ver-mais {
+            color: #0088ff;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0088ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(45 12 12)"></ellipse>
+                </svg>
+                <span>Orbital</span>
+            </a>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Sobrenos.html">Sobre Nós</a></li>
+                    <li><a href="suporte.html">Suporte</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="destinos-container">
+        <h1 class="destinos-title">Aonde você quer ir?</h1>
+        <p class="destinos-subtitle">Selecione uma de nossas expedições exclusivas pelo universo e profundezas.</p>
+        
+        <div class="destinos-grid">
+            
+            <a href="titanic.html" class="destino-card">
+                <div class="destino-preview">
+                    ⛴
+                </div>
+                <div class="destino-info">
+                    <div class="destino-tag">Subaquático</div>
+                    <h3>Expedição Titanic</h3>
+                    <p>Desça a 3.800 metros de profundidade no Oceano Atlântico para explorar as ruínas do navio mais famoso da história.</p>
+                    <div class="destino-meta">
+                        <span class="btn-ver-mais">Explorar de perto →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="lua.html" class="destino-card">
+                <div class="destino-preview">
+                    ☾
+                </div>
+                <div class="destino-info">
+                    <div class="destino-tag">Espacial</div>
+                    <h3>Residências Lunares</h3>
+                    <p>Visite o Átrio Central, hospede-se nas Suítes Rególito e experimente a gravidade zero com uma vista privilegiada da Terra.</p>
+                    <div class="destino-meta">
+                        <span class="btn-ver-mais">Ver em 3D →</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="piramedes.html" class="destino-card">
+              <div class="destino-preview">
+                  ▲
+              </div>
+              <div class="destino-info">
+               <div class="destino-tag">Histórico</div>
+                <h3>Piramedes de Gizé</h3>
+               <p>Explore o interior da Grande Pirâmide com acesso exclusivo a câmaras subterrâneas e segredos ocultos milenares.</p>
+           <div class="destino-meta">
+                <span class="btn-ver-mais">Explorar Mistérios →</span>
+           </div>
+    </div>
+</a>
+        </div>
+    </main>
+
+</body>
+</html>

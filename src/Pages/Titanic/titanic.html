@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedição Titanic - Orbital</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="icon" href="Gemini_Generated_Image_1r79gr1r79gr1r79.png">
+    
+    <style>
+        
+        .container-titanic {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+    
+        .missao-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .missao-header h1 {
+            font-size: 46px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            text-shadow: 0 0 20px rgba(0, 136, 255, 0.3);
+        }
+
+        .missao-header p {
+            font-size: 18px;
+            color: #b3b3b3;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
+        }
+
+        
+        .dados-tecnicos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .dado-card {
+            background-color: rgba(26, 26, 26, 0.8);
+            border: 1px solid #333;
+            padding: 15px 25px;
+            border-radius: 12px;
+            min-width: 180px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .dado-card span {
+            display: block;
+            font-size: 11px;
+            color: #0088ff;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .dado-card strong {
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+       
+        .conteudo-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        @media (max-width: 850px) {
+            .conteudo-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+      
+        .relatorio-bloco {
+            background-color: rgba(26, 26, 26, 0.5);
+            border-left: 4px solid #0088ff;
+            padding: 30px;
+            border-radius: 0 20px 20px 0;
+        }
+
+        .relatorio-bloco h2 {
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .relatorio-bloco p {
+            color: #a0a0a0;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+     
+        .galeria-fotos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .foto-container {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid #404040;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease;
+            cursor: pointer;
+        }
+
+       
+        .foto-container.destaque {
+            grid-column: span 2;
+        }
+
+        .foto-container img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: filter 0.4s ease, transform 0.4s ease;
+            filter: brightness(0.85) contrast(1.1);
+        }
+
+        .foto-container.destaque img {
+            height: 280px;
+        }
+
+      
+        .foto-container:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #0088ff;
+            box-shadow: 0 15px 30px rgba(0, 136, 255, 0.25);
+        }
+
+        .foto-container:hover img {
+            filter: brightness(1);
+            transform: scale(1.05);
+        }
+
+      
+        .foto-legenda {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 15px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0088ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(45 12 12)"></ellipse>
+                </svg>
+                <span>Orbital</span>
+            </a>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Sobrenos.html">Sobre Nós</a></li>
+                    <li><a href="Viagens.html">Viagens</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container-titanic">
+        
+        <section class="missao-header">
+            <h1>Expedição Ruínas do Titanic</h1>
+            <p>Descubra os segredos do gigante do oceano numa jornada de exploração subaquática avançada a bordo do nosso submersível pressurizado.</p>
+            
+            <div class="dados-tecnicos">
+                <div class="dado-card">
+                    <span>Profundidade</span>
+                    <strong>3.800 Metros</strong>
+                </div>
+                <div class="dado-card">
+                    <span>Localização</span>
+                    <strong>Atlântico Norte</strong>
+                </div>
+                <div class="dado-card">
+                    <span>Status da Missão</span>
+                    <strong style="color: #00ff66;">Disponível</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="conteudo-layout">
+            
+            <div class="relatorio-bloco">
+                <h2>O Diário de Exploração</h2>
+                <p>Repousando no leito marinho desde 1912, as ruínas do RMS Titanic oferecem uma das visões mais impressionantes e reverentes do planeta. A nossa expedição combina arqueologia marítima com tecnologia de pressurização de ponta.</p>
+                <p>Através das janelas de visualização panorâmicas em acrílico reforçado, os exploradores poderão testemunhar a famosa proça do navio, as gigantescas âncoras e os destroços que contam a história de uma era dourada da navegação.</p>
+                <p>Cada descida é acompanhada por especialistas e equipada com holofotes de alta potência, revelando detalhes que estiveram ocultos na escuridão eterna do oceano por mais de um século.</p>
+            </div>
+            <div class="reserva-container" style="margin-top: 35px; background: rgba(0, 136, 255, 0.05); border: 1px solid rgba(0, 136, 255, 0.2); padding: 30px; border-radius: 20px;">
+    <h3 style="color: #ffffff; font-size: 20px; margin-bottom: 10px; font-weight: 700;">Agendar Minha Descida</h3>
+    <p style="color: #a0a0a0; font-size: 14px; margin-bottom: 20px;">Selecione a data da sua expedição subaquática. Vagas limitadas por temporada.</p>
+    
+    <form action="#" onsubmit="alert('Sua vaga na Expedição Titanic foi pré-reservada! Entraremos em contato para confirmar seus testes de pressurização.'); return false;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; color: #0088ff; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Escolha a Data</label>
+            <input type="date" required style="width: 100%; background: #1a1a1a; border: 1px solid #404040; padding: 12px; border-radius: 10px; color: #ffffff; outline: none;">
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; color: #0088ff; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Assentos Necessários</label>
+            <select style="width: 100%; background: #1a1a1a; border: 1px solid #404040; padding: 12px; border-radius: 10px; color: #ffffff; outline: none;">
+                <option>01 Assento Explorador</option>
+                <option>02 Assentos (Pacote Duplo)</option>
+                <option>03 Assentos (Submersível Exclusivo)</option>
+            </select>
+        </div>
+        <button type="submit" style="width: 100%; background: linear-gradient(135deg, #0055cc, #0088ff); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: background 0.3s;">
+            Solicitar Reserva do Submersível
+        </button>
+    </form>
+</div>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>

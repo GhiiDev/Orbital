@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residências Lunares - Orbital</title> 
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Gemini_Generated_Image_1r79gr1r79gr1r79.png">
+
+    <style>
+        /* =========================================
+           ESTILOS DO HEADER E NAVEGAÇÃO 
+           ========================================= */
+        .site-header {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999; 
+            pointer-events: none; /* Deixa o fundo do header "atravessável" para girar a lua */
+            padding: 20px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            pointer-events: auto; /* Mantém os links clicáveis */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navigation ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navigation a:hover {
+            color: #0088ff;
+        }
+
+        /* =========================================
+           ESTILOS GLOBAIS E DO SISTEMA 3D
+           ========================================= */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+        
+        canvas { display: block; }
+        
+        /* Etiquetas flutuantes das bases */
+        .tag {
+            position: absolute;
+            color: #00d8ff;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            border: 1px solid #333;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #fff;
+            pointer-events: none;
+            transition: opacity 0.5s;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0088ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(45 12 12)"></ellipse>
+                </svg>
+                <span>Orbital</span>
+            </a>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Sobrenos.html">Sobre Nós</a></li>
+                    <li><a href="Viagens.html">Viagens</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div id="loading">Carregando texturas de alta resolução NASA...</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
+
+    <script>
+        /* CONFIGURAÇÃO PRINCIPAL E SISTEMA 3D */
+        let scene, camera, renderer, labelRenderer, controls, moon, earth;
+        const clock = new THREE.Clock();
+
+        scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x000, 0.005); 
+
+        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
+        camera.position.set(0, 10, 30); 
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio); 
+        renderer.shadowMap.enabled = true; 
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
+        document.body.appendChild(renderer.domElement);
+
+        labelRenderer = new THREE.CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0px';
+        labelRenderer.domElement.style.zIndex = '5'; 
+        document.body.appendChild(labelRenderer.domElement);
+
+        // Devolvendo os controles de câmera (Mouse)
+        controls = new THREE.OrbitControls(camera, labelRenderer.domElement);
+        controls.enableDamping = true; 
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 6;  
+        controls.maxDistance = 100; 
+        controls.autoRotate = true; 
+        controls.autoRotateSpeed = 0.1;
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.02);
+        scene.add(ambientLight);
+
+        const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        sunLight.position.set(50, 20, 10);
+        sunLight.castShadow = true;
+        
+        sunLight.shadow.mapSize.width = 4096; 
+        sunLight.shadow.mapSize.height = 4096;
+        sunLight.shadow.camera.near = 0.5;
+        sunLight.shadow.camera.far = 200;
+        sunLight.shadow.camera.left = -50;
+        sunLight.shadow.camera.right = 50;
+        sunLight.shadow.camera.top = 50;
+        sunLight.shadow.camera.bottom = -50;
+        scene.add(sunLight);
+
+        const textureManager = new THREE.LoadingManager();
+        textureManager.onLoad = function () {
+            document.getElementById('loading').style.opacity = '0';
+            setTimeout(() => {
+                document.querySelectorAll('.tag').forEach(tag => tag.style.opacity = '1');
+            }, 500);
+        };
+        const textureLoader = new THREE.TextureLoader(textureManager);
+        
+        const moonMap = textureLoader.load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/lroc_color_poles_1k.jpg');
+        const moonDisplacementMap = textureLoader.load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/17271/ldem_3_8bit.jpg'); 
+        
+        moonMap.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        moonDisplacementMap.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+        const moonRadius = 5;
+        const moonGeometry = new THREE.IcosahedronGeometry(moonRadius, 128); 
+        
+        const moonMaterial = new THREE.MeshStandardMaterial({
+            map: moonMap,
+            displacementMap: moonDisplacementMap,
+            displacementScale: 0.15, 
+            roughness: 1.0, 
+            metalness: 0.05
+        });
+
+        moon = new THREE.Mesh(moonGeometry, moonMaterial);
+        moon.receiveShadow = true;
+        scene.add(moon);
+
+        const earthGeometry = new THREE.SphereGeometry(2, 64, 64);
+        const earthTexture = textureLoader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg');
+        const earthMaterial = new THREE.MeshStandardMaterial({
+            map: earthTexture,
+            roughness: 0.4,
+            emissive: 0x000000, 
+            emissiveIntensity: 0.1
+        });
+        earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        earth.position.set(-30, 15, -40); 
+        earth.lookAt(0,0,0);
+        scene.add(earth);
+
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.06, transparent: true, opacity: 0.9 });
+        const starsVertices = [];
+        for(let i = 0; i < 4000; i++) {
+            starsVertices.push((Math.random() - 0.5) * 600, (Math.random() - 0.5) * 600, (Math.random() - 0.5) * 600);
+        }
+        starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        // Devolvendo a arquitetura e as bases
+        function createColony(lat, lon, size, colorEmissive, tagText) {
+            const phi = (90 - lat) * (Math.PI / 180);
+            const theta = (lon + 180) * (Math.PI / 180);
+
+            const alturaAjustada = moonRadius + 0.12; 
+            const x = -(alturaAjustada * Math.sin(phi) * Math.cos(theta));
+            const z = (alturaAjustada * Math.sin(phi) * Math.sin(theta));
+            const y = (alturaAjustada * Math.cos(phi));
+
+            const baseGroup = new THREE.Group();
+
+            const moduleGeometry = new THREE.SphereGeometry(size, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2);
+            const moduleMaterial = new THREE.MeshStandardMaterial({
+                color: 0xcccccc,
+                emissive: colorEmissive,
+                emissiveIntensity: 0.8, 
+                transparent: true,
+                opacity: 0.9,
+                roughness: 0.1,
+                metalness: 0.8
+            });
+            const module = new THREE.Mesh(moduleGeometry, moduleMaterial);
+            baseGroup.add(module);
+
+            const baseFoundationGeometry = new THREE.CylinderGeometry(size * 1.5, size * 1.8, size / 4, 32);
+            const baseFoundationMaterial = new THREE.MeshStandardMaterial({
+                color: 0x444444,
+                roughness: 0.9,
+                metalness: 0.1
+            });
+            const baseFoundation = new THREE.Mesh(baseFoundationGeometry, baseFoundationMaterial);
+            baseFoundation.position.y = -size/8;
+            baseGroup.add(baseFoundation);
+
+            baseGroup.position.set(x, y, z);
+            baseGroup.lookAt(0, 0, 0); 
+            baseGroup.rotateX(Math.PI / 2); 
+            
+            baseFoundation.receiveShadow = true; 
+            baseFoundation.castShadow = true;   
+            
+            moon.add(baseGroup); 
+
+            if (tagText) {
+                const tagDiv = document.createElement('div');
+                tagDiv.className = 'tag';
+                tagDiv.textContent = tagText;
+                const tagLabel = new THREE.CSS2DObject(tagDiv);
+                tagLabel.position.set(0, size * 1.2, 0); 
+                module.add(tagLabel); 
+            }
+
+            module.userData.colorEmissive = new THREE.Color(colorEmissive);
+            return module;
+        }
+
+        const colonies = [];
+        colonies.push(createColony(15, 45, 0.4, 0x00d8ff, 'Átrio Central'));
+        colonies.push(createColony(11, 49, 0.25, 0xffa500, 'Suítes Rególito'));
+        colonies.push(createColony(16, 41, 0.25, 0xffa500, 'Suítes VIP'));
+        colonies.push(createColony(8, 55, 0.18, 0x00ff00, 'Jardins Hidropônicos'));
+        colonies.push(createColony(20, 35, 0.15, 0xcccccc, 'Módulo de Observação'));
+
+        function createSolarField(lat, lon, angle) {
+            const phi = (90 - lat) * (Math.PI / 180);
+            const theta = (lon + 180) * (Math.PI / 180);
+            const alturaAjustada = moonRadius + 0.05; 
+            const x = -(alturaAjustada * Math.sin(phi) * Math.cos(theta));
+            const z = (alturaAjustada * Math.sin(phi) * Math.sin(theta));
+            const y = (alturaAjustada * Math.cos(phi));
+
+            const solarGeometry = new THREE.PlaneGeometry(1, 0.5);
+            const solarMaterial = new THREE.MeshStandardMaterial({ color: 0x001133, roughness: 0.1, metalness: 1.0 });
+            const solarPanel = new THREE.Mesh(solarGeometry, solarMaterial);
+            solarPanel.position.set(x, y, z);
+            solarPanel.lookAt(0, 0, 0);
+            solarPanel.rotateX(Math.PI / 2);
+            solarPanel.rotation.z = angle; 
+            solarPanel.receiveShadow = true;
+            moon.add(solarPanel);
+        }
+        
+        createSolarField(10, 52, Math.PI / 4);
+        createSolarField(9, 53, Math.PI / 4.1);
+        createSolarField(11, 51, Math.PI / 3.9);
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const delta = clock.getDelta();
+            const elipseTime = Date.now() * 0.001; 
+            
+            // Devolvendo a atualização dos controles
+            controls.update(); 
+
+            moon.rotation.y += 0.0001; 
+            earth.rotation.y += 0.00005; 
+
+            colonies.forEach(module => {
+                const baseIntensity = 0.8;
+                const variation = Math.sin(elipseTime + module.id); 
+                module.material.emissiveIntensity = baseIntensity + variation * 0.1;
+                module.material.opacity = 0.85 + variation * 0.05;
+            });
+
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+        }
+
+        animate(); 
+    </script>
+    <div class="painel-reserva-lua" style="position: fixed; bottom: 30px; right: 30px; width: 320px; background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(10px); border: 1px solid #333; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); z-index: 99999;">
+    <span style="font-size: 11px; color: #00ffcc; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px;">Hospedagem Estelar</span>
+    <h3 style="color: #ffffff; font-size: 20px; font-weight: 800; margin-bottom: 15px;">Reservar Suíte Rególito</h3>
+    
+    <form action="#" onsubmit="alert('Embarque confirmado! Seu bilhete para as Residências Lunares Orbital foi gerado. Verifique seu painel de missões.'); return false;">
+        <div style="margin-bottom: 12px;">
+            <label style="display: block; color: #0088ff; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Período da Estadia</label>
+            <select style="width: 100%; background: #111; border: 1px solid #404040; padding: 10px; border-radius: 8px; color: #ffffff; font-size: 13px; outline: none;">
+                <option>1 Órbita Terrestre (7 dias)</option>
+                <option>2 Órbitas Terrestres (14 dias)</option>
+                <option>Temporada Lunar Completa (30 dias)</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; color: #0088ff; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">Tipo de Cabine</label>
+            <select style="width: 100%; background: #111; border: 1px solid #404040; padding: 10px; border-radius: 8px; color: #ffffff; font-size: 13px; outline: none;">
+                <option>Suíte Rególito Standard</option>
+                <option>Master Átrio com Vista da Terra</option>
+            </select>
+        </div>
+        <button type="submit" style="width: 100%; background: linear-gradient(135deg, #0055cc, #0088ff); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 136, 255, 0.4);">
+            Garantir Assento no Foguete →
+        </button>
+    </form>
+</div>
+</body>
+</html>
